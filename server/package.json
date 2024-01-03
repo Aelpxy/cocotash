@@ -1,7 +1,6 @@
 {
   "name": "@ventus/server",
   "version": "1.0.0",
-  "description": "Deploy databases with ease",
   "main": "./src/main.ts",
   "scripts": {
     "start": "export COMMIT_SHA=$(git rev-parse --short HEAD) NODE_ENV=production && ts-node ./src/main.ts",
