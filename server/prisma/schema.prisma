@@ -1,0 +1,136 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id
+
+  name     String
+  email    String @unique
+  password String
+  secret   String @unique
+
+  deleted  Boolean @default(false)
+  verified Boolean @default(false)
+  two_fa   Boolean @default(false)
+
+  teams  Team[]
+  events Event[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@index([id, email])
+  @@map("users")
+}
+
+model Team {
+  id String @id
+
+  name    String
+  slug    String  @unique
+  enabled Boolean @default(false)
+
+  members   User[]
+  databases Database[]
+
+  owner_id String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@index([id, owner_id, slug])
+  @@map("teams")
+}
+
+model Event {
+  id String @id
+
+  type EventType
+
+  ip       String
+  location String
+  object   Json
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  User    User?   @relation(fields: [user_id], references: [id])
+  user_id String?
+
+  @@index([id])
+  @@map("events")
+}
+
+model Database {
+  id           String @id
+  container_id String @unique
+
+  name String
+  type DatabaseType
+
+  username String
+  password String
+  port     Int
+
+  team Team @relation(fields: [team_id], references: [id], onDelete: Cascade)
+
+  team_id String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@index([id, container_id, team_id])
+  @@map("databases")
+}
+
+model CronJob {
+  id String @id
+
+  syntax String
+  job    JobType
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@index([id])
+  @@map("cronjobs")
+}
+
+model Backup {
+  id String @id
+
+  name String
+  url  String
+
+  expires_at DateTime
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@index([id])
+  @@map("backups")
+}
+
+enum DatabaseType {
+  postgresql
+  redis
+}
+
+enum JobType {
+  backup
+}
+
+enum EventType {
+  user
+  team
+  database
+  cronjob
+  backup
+}
