@@ -7,28 +7,24 @@ class DaemonClient {
         this.daemonInstance = daemon;
     }
 
-    public async getDatabaseLiveLogs() {
-
+    public async getDatabaseLiveLogs(id: string) {
+        return await this.daemonInstance.get("/db/live/" + id)
     }
 
-    public async getDatabase() {
-
+    public async getDatabaseMetrics(id: string) {
+        return await this.daemonInstance.get("/db/metrics/" + id)
     }
 
-    public async getDatabases() {
-
+    public async getDatabase(id: string) {
+        return await this.daemonInstance.get("/db/" + id)
     }
 
-    public async createDatabase() {
-
+    public async createDatabase(type: 'postgres' | 'redis') {
+        return await this.daemonInstance.post("/db/" + type)
     }
 
-    public async updateDatabase() {
-
-    }
-
-    public async deleteDatabase() {
-        
+    public async deleteDatabase(id: string) {
+        return await this.daemonInstance.delete("/db/" + id)
     }
 }
 

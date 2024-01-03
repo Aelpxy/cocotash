@@ -34,7 +34,7 @@ class UserService {
         return user;
     }
 
-    private async generateSessionToken(body: IGenerateSessionToken) {
+    public async generateSessionToken(body: IGenerateSessionToken) {
         const user = await this.db.user.findUnique({
             where: {
                 email: body.email,
