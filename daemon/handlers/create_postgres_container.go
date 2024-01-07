@@ -43,7 +43,6 @@ func CreatePostgreSQLDatabaseContainer(c *gin.Context) {
 		},
 		RestartPolicy: container.RestartPolicy{
 			Name:              "always",
-			MaximumRetryCount: 10,
 		},
 		Resources: container.Resources{
 			Memory:     memoryLimitBytes,
@@ -60,7 +59,7 @@ func CreatePostgreSQLDatabaseContainer(c *gin.Context) {
 		Env:   []string{"POSTGRES_PASSWORD=" + password},
 	}
 
-	publicHost := os.Getenv("PUBLIC_HOST_URL")
+	publicHost := os.Getenv("DAEMON_HOST_URL")
 
 	resp, err := cli.ContainerCreate(ctx, config, hostConfig, nil, nil, fmt.Sprintf("%s.%s", randomID, "ventus.internal"))
 	if err != nil {

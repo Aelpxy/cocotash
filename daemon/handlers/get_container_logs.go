@@ -3,16 +3,15 @@ package handlers
 import (
 	"context"
 	"fmt"
-	"io"
 	"net/http"
-	"os"
+	"io"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
 	"github.com/gin-gonic/gin"
 )
 
-func GetContainerLogs(c *gin.Context) {
+func StreamContainerLogs(c *gin.Context) {
 	containerID := c.Param("id")
 
 	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
@@ -43,7 +42,23 @@ func GetContainerLogs(c *gin.Context) {
 		return
 	}
 
-	c.Status(http.StatusOK)
-	c.Header("Content-Type", "text/plain")
-	io.Copy(c.Writer, logs)
+	defer logs.Close()
+
+	c.Stream(func(w io.Writer) bool {
+		for {
+			select {
+			case <-c.Request.Context().Done():
+				return false
+			default:
+				buffer := make([]byte, 1024)
+				n, err := logs.Read(buffer)
+				if err != nil {
+					return false
+				}
+				c.SSEvent("log", string(buffer[:n]))
+				c.Writer.Flush()
+			}
+		}
+		return true
+	})
 }

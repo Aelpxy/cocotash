@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"os"
 
 	"github.com/docker/docker/client"
 	"github.com/gin-gonic/gin"
@@ -36,7 +35,7 @@ func GetContainerInfo(c *gin.Context) {
 	}
 
 	response := gin.H{
-		"id":         containerDetails.Name,
+		"id":         containerDetails.ID,
 		"status":     containerDetails.State.Status,
 		"created_at": containerDetails.Created,
 	}

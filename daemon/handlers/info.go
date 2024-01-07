@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"os"
 	"runtime"
 
 	"github.com/docker/docker/api/types"

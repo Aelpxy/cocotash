@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	requiredEnvVars := []string{"DAEMON_API_TOKEN", "PUBLIC_HOST_URL"}
+	requiredEnvVars := []string{"DAEMON_API_TOKEN", "DAEMON_HOST_URL"}
 	for _, envVar := range requiredEnvVars {
 		if value := os.Getenv(envVar); value == "" {
 			fmt.Printf("Error: Required environment variable %s is not set.\n", envVar)
@@ -40,8 +40,8 @@ func main() {
 	authGroup.GET("/info", handlers.GetInfo)
 
 	authGroup.GET("/db/:id", handlers.GetContainerInfo)
-	authGroup.GET("/db/metrics/:id", handlers.ContainerMetrics)
-	authGroup.GET("/db/:id/live", handlers.GetContainerLogs)
+	authGroup.GET("/db/:id/metrics", handlers.ContainerMetrics)
+	authGroup.GET("/db/:id/steam", handlers.StreamContainerLogs)
 	authGroup.POST("/db/redis", handlers.CreateRedisDatabaseContainer)
 	authGroup.POST("/db/postgres", handlers.CreatePostgreSQLDatabaseContainer)
 	authGroup.DELETE("/db/:id", handlers.DeleteContainer)
