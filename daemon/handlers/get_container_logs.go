@@ -3,8 +3,8 @@ package handlers
 import (
 	"context"
 	"fmt"
-	"net/http"
 	"io"
+	"net/http"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
@@ -59,6 +59,5 @@ func StreamContainerLogs(c *gin.Context) {
 				c.Writer.Flush()
 			}
 		}
-		return true
 	})
 }

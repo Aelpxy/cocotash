@@ -12,7 +12,7 @@ import (
 )
 
 type SystemInfo struct {
-	Name 			string `json:name`
+	Name            string
 	ContainersCount int    `json:"container_count"`
 	Processor       string `json:"processor"`
 }
@@ -30,7 +30,7 @@ func GetInfo(c *gin.Context) {
 	}
 
 	sysInfo := SystemInfo{
-		Name:             fmt.Sprintf("ventus.daemon"),
+		Name:            "ventus.daemon",
 		ContainersCount: dockerInfo.Containers,
 		Processor:       getProcessorInfo(),
 	}
