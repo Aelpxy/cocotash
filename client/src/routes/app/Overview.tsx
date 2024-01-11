@@ -1,5 +1,5 @@
-import Layout from '../layouts/Layout';
-import ApplicationLayout from '../layouts/ApplicationLayout';
+import Layout from '../../layouts/Layout';
+import ApplicationLayout from '../../layouts/ApplicationLayout';
 
 const navigation = [
     { name: 'Overview', href: '/@app', current: true },
@@ -8,7 +8,7 @@ const navigation = [
     { name: 'Backups', href: '/@app/backups', current: false },
 ];
 
-export default function App() {
+export default function Overview() {
     return (
         <>
             <Layout>
