@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Link } from 'react-router-dom';
+import { classNames } from '../utils/common';
 
 type NavigationItem = {
     name: string;
@@ -14,10 +16,6 @@ interface IProps {
     navigation: NavigationItem[];
 }
 
-function classNames(...classes: string[]) {
-    return classes.filter(Boolean).join(' ');
-}
-
 export default function ApplicationLayout(props: IProps) {
     return (
         <>
@@ -28,27 +26,27 @@ export default function ApplicationLayout(props: IProps) {
                             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                                 <div className="flex h-16 items-center justify-between">
                                     <div className="flex items-center">
-                                        <div className="flex-shrink-0 text-zinc-100">
+                                        <div className="flex-shrink-0 select-none text-zinc-100">
                                             <code>~/ventus</code>
                                         </div>
                                         <div className="hidden md:block">
                                             <div className="ml-10 flex items-baseline space-x-4">
                                                 {props.navigation.map((item) => (
-                                                    <a
+                                                    <Link
                                                         key={item.name}
-                                                        href={item.href}
+                                                        to={item.href}
                                                         className={classNames(
+                                                            'rounded-md px-3 py-2 text-sm font-medium transition duration-300 ease-in-out',
                                                             item.current
-                                                                ? 'bg-zinc-950 text-white'
-                                                                : 'text-gray-300 hover:bg-zinc-700 hover:text-white',
-                                                            'rounded-md px-3 py-2 text-sm font-medium',
+                                                                ? 'border border-zinc-800 bg-zinc-950/60 text-white'
+                                                                : 'text-gray-300 hover:bg-zinc-800 hover:text-white',
                                                         )}
                                                         aria-current={
                                                             item.current ? 'page' : undefined
                                                         }
                                                     >
                                                         {item.name}
-                                                    </a>
+                                                    </Link>
                                                 ))}
                                             </div>
                                         </div>
@@ -81,10 +79,10 @@ export default function ApplicationLayout(props: IProps) {
                                             as="a"
                                             href={item.href}
                                             className={classNames(
+                                                'block rounded-md border border-zinc-300 px-3 py-2 text-base font-medium transition duration-300 ease-in-out',
                                                 item.current
-                                                    ? 'bg-gray-900 text-white'
-                                                    : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                                'block rounded-md px-3 py-2 text-base font-medium',
+                                                    ? 'border-transparent bg-zinc-900 text-white'
+                                                    : 'text-zinc-300 hover:border-zinc-700 hover:bg-zinc-700 hover:text-white',
                                             )}
                                             aria-current={item.current ? 'page' : undefined}
                                         >
@@ -97,7 +95,7 @@ export default function ApplicationLayout(props: IProps) {
                     )}
                 </Disclosure>
 
-                <header className="shadow">
+                <header>
                     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                         <h1 className="text-3xl font-bold tracking-tight text-zinc-100">
                             {props.title}

@@ -14,7 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                     zIndex: 20,
                 },
             }}
-            position="bottom-center"
+            position="bottom-left"
             reverseOrder={false}
         >
             {(t) => (
