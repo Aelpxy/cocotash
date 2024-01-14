@@ -13,7 +13,7 @@ export default function Cronjobs() {
         <>
             <Layout>
                 <ApplicationLayout navigation={navigation} title="Cronjobs">
-                Cronjobs
+                    Cronjobs
                 </ApplicationLayout>
             </Layout>
         </>

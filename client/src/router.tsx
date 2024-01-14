@@ -25,7 +25,7 @@ function Router() {
                     <Route path="/@app/databases/:id" element={<Database />} />
 
                     <Route path="/@app/cronjobs" element={<Cronjobs />} />
-                    
+
                     <Route path="/@app/backups" element={<Backups />} />
 
                     <Route path="*" element={<NotFound />} />

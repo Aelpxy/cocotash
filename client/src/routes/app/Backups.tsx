@@ -13,7 +13,7 @@ export default function Backups() {
         <>
             <Layout>
                 <ApplicationLayout navigation={navigation} title="Backups">
-                Backups
+                    Backups
                 </ApplicationLayout>
             </Layout>
         </>

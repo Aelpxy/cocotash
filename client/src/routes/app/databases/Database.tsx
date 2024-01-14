@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Layout from '../../../layouts/Layout';
 import ApplicationLayout from '../../../layouts/ApplicationLayout';
 import { Stats } from '../../../components/Stats';
@@ -21,7 +21,7 @@ const navigation = [
     { name: 'Backups', href: '/@app/backups', current: false },
 ];
 
-const initialTabNames = ['Metrics', 'Console', 'Data', 'Variables', 'Settings'];
+const initialTabNames = ['Metrics', 'Console', 'Variables', 'Settings'];
 
 const generateTabs = (tabNames: string[], activeTab: string): Tab[] => {
     return tabNames.map((name) => ({
@@ -82,9 +82,15 @@ function Tabs({ activeTab, onTabClick }: TabsProps): JSX.Element {
     );
 }
 
+import { useLocation } from 'react-router-dom';
+
 export default function Database(): JSX.Element {
+    const location = useLocation();
+    const searchParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
+    const query = searchParams.get('tab');
+
     const [activeTab, setActiveTab] = useState(() => {
-        return localStorage.getItem('activeTab') || initialTabNames[0];
+        return query || initialTabNames[0];
     });
 
     const handleTabClick = (tabName: string): void => {
@@ -92,8 +98,11 @@ export default function Database(): JSX.Element {
     };
 
     useEffect(() => {
-        localStorage.setItem('activeTab', activeTab);
-    }, [activeTab]);
+        searchParams.set('tab', activeTab);
+
+        const newUrl = `${location.pathname}?${searchParams.toString()}`;
+        window.history.replaceState(null, '', newUrl);
+    }, [activeTab, location.pathname, searchParams]);
 
     return (
         <>

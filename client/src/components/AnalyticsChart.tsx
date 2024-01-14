@@ -26,8 +26,12 @@ const generateFakeData = (count: number): DataPoint[] => {
 
         data.push({
             created_at: `${hour}:${minute} ${period}`,
-            ram: Number(((Math.floor(Math.random() * 100) * 24) / 24 / 6).toFixed(2).toLocaleString(),),
-            cpu: Number(((Math.floor(Math.random() * 100) * 24) / 24 / 6).toFixed(2).toLocaleString(),),
+            ram: Number(
+                ((Math.floor(Math.random() * 100) * 24) / 24 / 6).toFixed(2).toLocaleString(),
+            ),
+            cpu: Number(
+                ((Math.floor(Math.random() * 100) * 24) / 24 / 6).toFixed(2).toLocaleString(),
+            ),
         });
     }
 
