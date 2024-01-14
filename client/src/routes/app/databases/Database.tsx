@@ -46,7 +46,7 @@ function Tabs({ activeTab, onTabClick }: TabsProps): JSX.Element {
                 <select
                     id="tabs"
                     name="tabs"
-                    className="block w-full rounded-md border-zinc-600 py-2 pl-3 pr-10 text-base focus:border-zinc-500 focus:outline-none focus:ring-zinc-500 sm:text-sm"
+                    className="block w-full rounded-md border-zinc-800 bg-zinc-950 py-2 pl-3 pr-10 text-base text-zinc-100 focus:border-zinc-800 focus:outline-none focus:ring-zinc-800 sm:text-sm"
                     onChange={(e) => onTabClick(e.target.value)}
                     value={activeTab}
                 >
@@ -83,6 +83,7 @@ function Tabs({ activeTab, onTabClick }: TabsProps): JSX.Element {
 }
 
 import { useLocation } from 'react-router-dom';
+import Settings from '../../../components/Settings';
 
 export default function Database(): JSX.Element {
     const location = useLocation();
@@ -113,7 +114,7 @@ export default function Database(): JSX.Element {
                         {activeTab === 'Metrics' && (
                             <div>
                                 <Stats />
-                                <div className="mt-6 rounded-md border border-zinc-900 px-6 py-6">
+                                <div className="rounded-md border border-zinc-900 px-6 py-6">
                                     <h2 className="mb-4 select-none text-2xl font-bold text-zinc-100">
                                         Hardware Usages (1H)
                                     </h2>
@@ -125,6 +126,14 @@ export default function Database(): JSX.Element {
                             <div>
                                 <LogsViewer logs={``} />
                                 <ExecuteConsole />
+                            </div>
+                        )}
+
+                        {activeTab === 'Variables' && <div>Variables</div>}
+
+                        {activeTab === 'Settings' && (
+                            <div>
+                                <Settings />
                             </div>
                         )}
                     </div>

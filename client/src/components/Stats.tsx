@@ -31,7 +31,7 @@ const stats = [
 
 export function Stats() {
     return (
-        <div className="mb-10 px-6 py-2">
+        <div className="my-8 mb-10">
             <dl className="mt-5 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {stats.map((item) => (
                     <div
